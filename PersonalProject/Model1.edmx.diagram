@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9eccf6548632459cbd1dd2cabc1d61c2" Name="Диаграмма1" ZoomLevel="53" >
+        <EntityTypeShape EntityType="Model1.GroupProduct" Width="1.5" PointX="1.125" PointY="3.75" />
+        <EntityTypeShape EntityType="Model1.Product" Width="1.5" PointX="4.375" PointY="3.625" />
+        <AssociationConnector Association="Model1.ProductToGroupProduct" />
+        <EntityTypeShape EntityType="Model1.GroupMeal" Width="1.5" PointX="10.125" PointY="7.25" />
+        <EntityTypeShape EntityType="Model1.Meal" Width="1.5" PointX="7.5" PointY="6.625" />
+        <AssociationConnector Association="Model1.MealToGroupMeal" />
+        <EntityTypeShape EntityType="Model1.MealProducts" Width="1.5" PointX="5.25" PointY="7" />
+        <AssociationConnector Association="Model1.MealProductsToMeal" />
+        <AssociationConnector Association="Model1.MealProductsToProducts" />
+        <EntityTypeShape EntityType="Model1.Menu" Width="1.5" PointX="1.5" PointY="10.5" />
+        <EntityTypeShape EntityType="Model1.MenuDay" Width="1.5" PointX="1.25" PointY="5.5" />
+        <AssociationConnector Association="Model1.Breakf" />
+        <AssociationConnector Association="Model1.Dinner1" />
+        <AssociationConnector Association="Model1.Dinner2" />
+        <AssociationConnector Association="Model1.Dinner3" />
+        <AssociationConnector Association="Model1.Supper" />
+        <AssociationConnector Association="Model1.MenuConstr" />
+        <EntityTypeShape EntityType="Model1.ProductList" Width="1.5" PointX="4.25" PointY="10.25" />
+        <AssociationConnector Association="Model1.Menu1" />
+        <AssociationConnector Association="Model1.Product1" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

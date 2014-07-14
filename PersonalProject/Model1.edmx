@@ -1,0 +1,734 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model1.Store" Alias="Self" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="Model1StoreContainer">
+          <EntitySet Name="GroupMeal" EntityType="Model1.Store.GroupMeal" store:Type="Tables" />
+          <EntitySet Name="GroupProduct" EntityType="Model1.Store.GroupProduct" store:Type="Tables" />
+          <EntitySet Name="Meal" EntityType="Model1.Store.Meal" store:Type="Tables" />
+          <EntitySet Name="MealProducts" EntityType="Model1.Store.MealProducts" store:Type="Tables" />
+          <EntitySet Name="Menu" EntityType="Model1.Store.Menu" store:Type="Tables" />
+          <EntitySet Name="MenuDay" EntityType="Model1.Store.MenuDay" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Model1.Store.Product" store:Type="Tables" />
+          <EntitySet Name="ProductList" EntityType="Model1.Store.ProductList" store:Type="Tables" />
+          <AssociationSet Name="Breakf" Association="Model1.Store.Breakf">
+            <End Role="Meal" EntitySet="Meal" />
+            <End Role="MenuDay" EntitySet="MenuDay" />
+          </AssociationSet>
+          <AssociationSet Name="Dinner1" Association="Model1.Store.Dinner1">
+            <End Role="Meal" EntitySet="Meal" />
+            <End Role="MenuDay" EntitySet="MenuDay" />
+          </AssociationSet>
+          <AssociationSet Name="Dinner2" Association="Model1.Store.Dinner2">
+            <End Role="Meal" EntitySet="Meal" />
+            <End Role="MenuDay" EntitySet="MenuDay" />
+          </AssociationSet>
+          <AssociationSet Name="Dinner3" Association="Model1.Store.Dinner3">
+            <End Role="Meal" EntitySet="Meal" />
+            <End Role="MenuDay" EntitySet="MenuDay" />
+          </AssociationSet>
+          <AssociationSet Name="MealProductsToMeal" Association="Model1.Store.MealProductsToMeal">
+            <End Role="Meal" EntitySet="Meal" />
+            <End Role="MealProducts" EntitySet="MealProducts" />
+          </AssociationSet>
+          <AssociationSet Name="MealProductsToProducts" Association="Model1.Store.MealProductsToProducts">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="MealProducts" EntitySet="MealProducts" />
+          </AssociationSet>
+          <AssociationSet Name="MealToGroupMeal" Association="Model1.Store.MealToGroupMeal">
+            <End Role="GroupMeal" EntitySet="GroupMeal" />
+            <End Role="Meal" EntitySet="Meal" />
+          </AssociationSet>
+          <AssociationSet Name="Menu1" Association="Model1.Store.Menu1">
+            <End Role="Menu" EntitySet="Menu" />
+            <End Role="ProductList" EntitySet="ProductList" />
+          </AssociationSet>
+          <AssociationSet Name="MenuConstr" Association="Model1.Store.MenuConstr">
+            <End Role="Menu" EntitySet="Menu" />
+            <End Role="MenuDay" EntitySet="MenuDay" />
+          </AssociationSet>
+          <AssociationSet Name="Product1" Association="Model1.Store.Product1">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ProductList" EntitySet="ProductList" />
+          </AssociationSet>
+          <AssociationSet Name="ProductToGroupProduct" Association="Model1.Store.ProductToGroupProduct">
+            <End Role="GroupProduct" EntitySet="GroupProduct" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="Supper" Association="Model1.Store.Supper">
+            <End Role="Meal" EntitySet="Meal" />
+            <End Role="MenuDay" EntitySet="MenuDay" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="GroupMeal">
+          <Key>
+            <PropertyRef Name="GroupMealPK" />
+          </Key>
+          <Property Name="GroupMealPK" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="GroupProduct">
+          <Key>
+            <PropertyRef Name="GroupProductPK" />
+          </Key>
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="GroupProductPK" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="Meal">
+          <Key>
+            <PropertyRef Name="MealPK" />
+          </Key>
+          <Property Name="MealPK" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="Recept" Type="nvarchar" />
+          <Property Name="GroupMealFK" Type="int" />
+          <Property Name="ReadyTime" Type="int" />
+          <Property Name="Portions" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MealProducts">
+          <Key>
+            <PropertyRef Name="MealProducts" />
+          </Key>
+          <Property Name="MealFK" Type="int" />
+          <Property Name="ProductFK" Type="int" />
+          <Property Name="Quantity" Type="bigint" />
+          <Property Name="MealProducts" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="Menu">
+          <Key>
+            <PropertyRef Name="MenuPK" />
+          </Key>
+          <Property Name="MenuPK" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="DateStart" Type="datetime" />
+          <Property Name="DateFinish" Type="datetime" />
+        </EntityType>
+        <EntityType Name="MenuDay">
+          <Key>
+            <PropertyRef Name="MenuDayPK" />
+          </Key>
+          <Property Name="MenuDayPK" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Date_" Type="datetime" />
+          <Property Name="Day" Type="nvarchar" MaxLength="100" />
+          <Property Name="MenuFK" Type="int" />
+          <Property Name="BreakfFK" Type="int" />
+          <Property Name="QuantPortionsB" Type="int" />
+          <Property Name="Dinner1FK" Type="int" />
+          <Property Name="Dinner2FK" Type="int" />
+          <Property Name="Dinner3FK" Type="int" />
+          <Property Name="QuantPortionsD" Type="int" />
+          <Property Name="SupperFK" Type="int" />
+          <Property Name="QuantPortionsS" Type="int" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductPK" />
+          </Key>
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="GroupProductFK" Type="int" />
+          <Property Name="ProductPK" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Measurement" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="ProductList">
+          <Key>
+            <PropertyRef Name="ProductListPK" />
+          </Key>
+          <Property Name="ProductListPK" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="MenuFK" Type="int" Nullable="false" />
+          <Property Name="ProductFK" Type="int" />
+          <Property Name="Quantity" Type="numeric" />
+        </EntityType>
+        <Association Name="Breakf">
+          <End Role="Meal" Type="Model1.Store.Meal" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MenuDay" Type="Model1.Store.MenuDay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meal">
+              <PropertyRef Name="MealPK" />
+            </Principal>
+            <Dependent Role="MenuDay">
+              <PropertyRef Name="BreakfFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Dinner1">
+          <End Role="Meal" Type="Model1.Store.Meal" Multiplicity="0..1" />
+          <End Role="MenuDay" Type="Model1.Store.MenuDay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meal">
+              <PropertyRef Name="MealPK" />
+            </Principal>
+            <Dependent Role="MenuDay">
+              <PropertyRef Name="Dinner1FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Dinner2">
+          <End Role="Meal" Type="Model1.Store.Meal" Multiplicity="0..1" />
+          <End Role="MenuDay" Type="Model1.Store.MenuDay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meal">
+              <PropertyRef Name="MealPK" />
+            </Principal>
+            <Dependent Role="MenuDay">
+              <PropertyRef Name="Dinner2FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Dinner3">
+          <End Role="Meal" Type="Model1.Store.Meal" Multiplicity="0..1" />
+          <End Role="MenuDay" Type="Model1.Store.MenuDay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meal">
+              <PropertyRef Name="MealPK" />
+            </Principal>
+            <Dependent Role="MenuDay">
+              <PropertyRef Name="Dinner3FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MealProductsToMeal">
+          <End Role="Meal" Type="Model1.Store.Meal" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MealProducts" Type="Model1.Store.MealProducts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meal">
+              <PropertyRef Name="MealPK" />
+            </Principal>
+            <Dependent Role="MealProducts">
+              <PropertyRef Name="MealFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MealProductsToProducts">
+          <End Role="Product" Type="Model1.Store.Product" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MealProducts" Type="Model1.Store.MealProducts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductPK" />
+            </Principal>
+            <Dependent Role="MealProducts">
+              <PropertyRef Name="ProductFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MealToGroupMeal">
+          <End Role="GroupMeal" Type="Model1.Store.GroupMeal" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Meal" Type="Model1.Store.Meal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GroupMeal">
+              <PropertyRef Name="GroupMealPK" />
+            </Principal>
+            <Dependent Role="Meal">
+              <PropertyRef Name="GroupMealFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Menu1">
+          <End Role="Menu" Type="Model1.Store.Menu" Multiplicity="1" />
+          <End Role="ProductList" Type="Model1.Store.ProductList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menu">
+              <PropertyRef Name="MenuPK" />
+            </Principal>
+            <Dependent Role="ProductList">
+              <PropertyRef Name="MenuFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MenuConstr">
+          <End Role="Menu" Type="Model1.Store.Menu" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MenuDay" Type="Model1.Store.MenuDay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menu">
+              <PropertyRef Name="MenuPK" />
+            </Principal>
+            <Dependent Role="MenuDay">
+              <PropertyRef Name="MenuFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Product1">
+          <End Role="Product" Type="Model1.Store.Product" Multiplicity="0..1" />
+          <End Role="ProductList" Type="Model1.Store.ProductList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductPK" />
+            </Principal>
+            <Dependent Role="ProductList">
+              <PropertyRef Name="ProductFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ProductToGroupProduct">
+          <End Role="GroupProduct" Type="Model1.Store.GroupProduct" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Product" Type="Model1.Store.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GroupProduct">
+              <PropertyRef Name="GroupProductPK" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="GroupProductFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Supper">
+          <End Role="Meal" Type="Model1.Store.Meal" Multiplicity="0..1" />
+          <End Role="MenuDay" Type="Model1.Store.MenuDay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meal">
+              <PropertyRef Name="MealPK" />
+            </Principal>
+            <Dependent Role="MenuDay">
+              <PropertyRef Name="SupperFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Model1" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="Model1Container" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="GroupProduct" EntityType="Model1.GroupProduct" />
+          <EntitySet Name="Product" EntityType="Model1.Product" />
+          <AssociationSet Name="ProductToGroupProduct" Association="Model1.ProductToGroupProduct">
+            <End Role="GroupProduct" EntitySet="GroupProduct" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <EntitySet Name="GroupMeal" EntityType="Model1.GroupMeal" />
+          <EntitySet Name="Meal" EntityType="Model1.Meal" />
+          <AssociationSet Name="MealToGroupMeal" Association="Model1.MealToGroupMeal">
+            <End Role="GroupMeal" EntitySet="GroupMeal" />
+            <End Role="Meal" EntitySet="Meal" />
+          </AssociationSet>
+          <EntitySet Name="MealProducts" EntityType="Model1.MealProducts" />
+          <AssociationSet Name="MealProductsToMeal" Association="Model1.MealProductsToMeal">
+            <End Role="Meal" EntitySet="Meal" />
+            <End Role="MealProducts" EntitySet="MealProducts" />
+          </AssociationSet>
+          <AssociationSet Name="MealProductsToProducts" Association="Model1.MealProductsToProducts">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="MealProducts" EntitySet="MealProducts" />
+          </AssociationSet>
+          <EntitySet Name="Menu" EntityType="Model1.Menu" />
+          <EntitySet Name="MenuDay" EntityType="Model1.MenuDay" />
+          <AssociationSet Name="Breakf" Association="Model1.Breakf">
+            <End Role="Meal" EntitySet="Meal" />
+            <End Role="MenuDay" EntitySet="MenuDay" />
+          </AssociationSet>
+          <AssociationSet Name="Dinner1" Association="Model1.Dinner1">
+            <End Role="Meal" EntitySet="Meal" />
+            <End Role="MenuDay" EntitySet="MenuDay" />
+          </AssociationSet>
+          <AssociationSet Name="Dinner2" Association="Model1.Dinner2">
+            <End Role="Meal" EntitySet="Meal" />
+            <End Role="MenuDay" EntitySet="MenuDay" />
+          </AssociationSet>
+          <AssociationSet Name="Dinner3" Association="Model1.Dinner3">
+            <End Role="Meal" EntitySet="Meal" />
+            <End Role="MenuDay" EntitySet="MenuDay" />
+          </AssociationSet>
+          <AssociationSet Name="Supper" Association="Model1.Supper">
+            <End Role="Meal" EntitySet="Meal" />
+            <End Role="MenuDay" EntitySet="MenuDay" />
+          </AssociationSet>
+          <AssociationSet Name="MenuConstr" Association="Model1.MenuConstr">
+            <End Role="Menu" EntitySet="Menu" />
+            <End Role="MenuDay" EntitySet="MenuDay" />
+          </AssociationSet>
+          <EntitySet Name="ProductList" EntityType="Model1.ProductList" />
+          <AssociationSet Name="Menu1" Association="Model1.Menu1">
+            <End Role="Menu" EntitySet="Menu" />
+            <End Role="ProductList" EntitySet="ProductList" />
+          </AssociationSet>
+          <AssociationSet Name="Product1" Association="Model1.Product1">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ProductList" EntitySet="ProductList" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="GroupProduct">
+          <Key>
+            <PropertyRef Name="GroupProductPK" />
+          </Key>
+          <Property Type="String" Name="Name" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="GroupProductPK" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Product" Relationship="Model1.ProductToGroupProduct" FromRole="GroupProduct" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductPK" />
+          </Key>
+          <Property Type="String" Name="Name" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="GroupProductFK" />
+          <Property Type="Int32" Name="ProductPK" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="GroupProduct" Relationship="Model1.ProductToGroupProduct" FromRole="Product" ToRole="GroupProduct" />
+          <Property Type="String" Name="Measurement" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MealProducts" Relationship="Model1.MealProductsToProducts" FromRole="Product" ToRole="MealProducts" />
+          <NavigationProperty Name="ProductList" Relationship="Model1.Product1" FromRole="Product" ToRole="ProductList" />
+        </EntityType>
+        <Association Name="ProductToGroupProduct">
+          <End Type="Model1.GroupProduct" Role="GroupProduct" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model1.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GroupProduct">
+              <PropertyRef Name="GroupProductPK" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="GroupProductFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="GroupMeal">
+          <Key>
+            <PropertyRef Name="GroupMealPK" />
+          </Key>
+          <Property Type="Int32" Name="GroupMealPK" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Meal" Relationship="Model1.MealToGroupMeal" FromRole="GroupMeal" ToRole="Meal" />
+        </EntityType>
+        <EntityType Name="Meal">
+          <Key>
+            <PropertyRef Name="MealPK" />
+          </Key>
+          <Property Type="Int32" Name="MealPK" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Recept" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="ReadyTime" />
+          <Property Type="Int32" Name="GroupMealFK" />
+          <NavigationProperty Name="GroupMeal" Relationship="Model1.MealToGroupMeal" FromRole="Meal" ToRole="GroupMeal" />
+          <NavigationProperty Name="MealProducts" Relationship="Model1.MealProductsToMeal" FromRole="Meal" ToRole="MealProducts" />
+          <NavigationProperty Name="MenuDay" Relationship="Model1.Breakf" FromRole="Meal" ToRole="MenuDay" />
+          <NavigationProperty Name="MenuDay1" Relationship="Model1.Dinner1" FromRole="Meal" ToRole="MenuDay" />
+          <NavigationProperty Name="MenuDay2" Relationship="Model1.Dinner2" FromRole="Meal" ToRole="MenuDay" />
+          <NavigationProperty Name="MenuDay3" Relationship="Model1.Dinner3" FromRole="Meal" ToRole="MenuDay" />
+          <NavigationProperty Name="MenuDay4" Relationship="Model1.Supper" FromRole="Meal" ToRole="MenuDay" />
+          <Property Type="Int32" Name="Portions" Nullable="false" />
+        </EntityType>
+        <Association Name="MealToGroupMeal">
+          <End Type="Model1.GroupMeal" Role="GroupMeal" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model1.Meal" Role="Meal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GroupMeal">
+              <PropertyRef Name="GroupMealPK" />
+            </Principal>
+            <Dependent Role="Meal">
+              <PropertyRef Name="GroupMealFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="MealProducts">
+          <Key>
+            <PropertyRef Name="MealProducts1" />
+          </Key>
+          <Property Type="Int32" Name="MealFK" />
+          <Property Type="Int32" Name="ProductFK" />
+          <Property Type="Int64" Name="Quantity" />
+          <Property Type="Int32" Name="MealProducts1" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Meal" Relationship="Model1.MealProductsToMeal" FromRole="MealProducts" ToRole="Meal" />
+          <NavigationProperty Name="Product" Relationship="Model1.MealProductsToProducts" FromRole="MealProducts" ToRole="Product" />
+        </EntityType>
+        <Association Name="MealProductsToMeal">
+          <End Type="Model1.Meal" Role="Meal" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model1.MealProducts" Role="MealProducts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meal">
+              <PropertyRef Name="MealPK" />
+            </Principal>
+            <Dependent Role="MealProducts">
+              <PropertyRef Name="MealFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MealProductsToProducts">
+          <End Type="Model1.Product" Role="Product" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model1.MealProducts" Role="MealProducts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductPK" />
+            </Principal>
+            <Dependent Role="MealProducts">
+              <PropertyRef Name="ProductFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Menu">
+          <Key>
+            <PropertyRef Name="MenuPK" />
+          </Key>
+          <Property Type="Int32" Name="MenuPK" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="DateTime" Name="DateStart" Precision="3" />
+          <Property Type="DateTime" Name="DateFinish" Precision="3" />
+          <NavigationProperty Name="MenuDay" Relationship="Model1.MenuConstr" FromRole="Menu" ToRole="MenuDay" />
+          <NavigationProperty Name="ProductList" Relationship="Model1.Menu1" FromRole="Menu" ToRole="ProductList" />
+        </EntityType>
+        <EntityType Name="MenuDay">
+          <Key>
+            <PropertyRef Name="MenuDayPK" />
+          </Key>
+          <Property Type="Int32" Name="MenuDayPK" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="DateTime" Name="Date_" Precision="3" />
+          <Property Type="String" Name="Day" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="MenuFK" />
+          <Property Type="Int32" Name="BreakfFK" />
+          <Property Type="Int32" Name="QuantPortionsB" />
+          <Property Type="Int32" Name="Dinner1FK" />
+          <Property Type="Int32" Name="Dinner2FK" />
+          <Property Type="Int32" Name="Dinner3FK" />
+          <Property Type="Int32" Name="QuantPortionsD" />
+          <Property Type="Int32" Name="SupperFK" />
+          <Property Type="Int32" Name="QuantPortionsS" />
+          <NavigationProperty Name="Meal" Relationship="Model1.Breakf" FromRole="MenuDay" ToRole="Meal" />
+          <NavigationProperty Name="Meal1" Relationship="Model1.Dinner1" FromRole="MenuDay" ToRole="Meal" />
+          <NavigationProperty Name="Meal2" Relationship="Model1.Dinner2" FromRole="MenuDay" ToRole="Meal" />
+          <NavigationProperty Name="Meal3" Relationship="Model1.Dinner3" FromRole="MenuDay" ToRole="Meal" />
+          <NavigationProperty Name="Meal4" Relationship="Model1.Supper" FromRole="MenuDay" ToRole="Meal" />
+          <NavigationProperty Name="Menu" Relationship="Model1.MenuConstr" FromRole="MenuDay" ToRole="Menu" />
+        </EntityType>
+        <Association Name="Breakf">
+          <End Type="Model1.Meal" Role="Meal" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model1.MenuDay" Role="MenuDay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meal">
+              <PropertyRef Name="MealPK" />
+            </Principal>
+            <Dependent Role="MenuDay">
+              <PropertyRef Name="BreakfFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Dinner1">
+          <End Type="Model1.Meal" Role="Meal" Multiplicity="0..1" />
+          <End Type="Model1.MenuDay" Role="MenuDay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meal">
+              <PropertyRef Name="MealPK" />
+            </Principal>
+            <Dependent Role="MenuDay">
+              <PropertyRef Name="Dinner1FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Dinner2">
+          <End Type="Model1.Meal" Role="Meal" Multiplicity="0..1" />
+          <End Type="Model1.MenuDay" Role="MenuDay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meal">
+              <PropertyRef Name="MealPK" />
+            </Principal>
+            <Dependent Role="MenuDay">
+              <PropertyRef Name="Dinner2FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Dinner3">
+          <End Type="Model1.Meal" Role="Meal" Multiplicity="0..1" />
+          <End Type="Model1.MenuDay" Role="MenuDay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meal">
+              <PropertyRef Name="MealPK" />
+            </Principal>
+            <Dependent Role="MenuDay">
+              <PropertyRef Name="Dinner3FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Supper">
+          <End Type="Model1.Meal" Role="Meal" Multiplicity="0..1" />
+          <End Type="Model1.MenuDay" Role="MenuDay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meal">
+              <PropertyRef Name="MealPK" />
+            </Principal>
+            <Dependent Role="MenuDay">
+              <PropertyRef Name="SupperFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MenuConstr">
+          <End Type="Model1.Menu" Role="Menu" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model1.MenuDay" Role="MenuDay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menu">
+              <PropertyRef Name="MenuPK" />
+            </Principal>
+            <Dependent Role="MenuDay">
+              <PropertyRef Name="MenuFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ProductList">
+          <Key>
+            <PropertyRef Name="ProductListPK" />
+          </Key>
+          <Property Type="Int32" Name="ProductListPK" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="MenuFK" Nullable="false" />
+          <Property Type="Int32" Name="ProductFK" />
+          <Property Type="Decimal" Name="Quantity" Precision="18" Scale="0" />
+          <NavigationProperty Name="Menu" Relationship="Model1.Menu1" FromRole="ProductList" ToRole="Menu" />
+          <NavigationProperty Name="Product" Relationship="Model1.Product1" FromRole="ProductList" ToRole="Product" />
+        </EntityType>
+        <Association Name="Menu1">
+          <End Type="Model1.Menu" Role="Menu" Multiplicity="1" />
+          <End Type="Model1.ProductList" Role="ProductList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menu">
+              <PropertyRef Name="MenuPK" />
+            </Principal>
+            <Dependent Role="ProductList">
+              <PropertyRef Name="MenuFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Product1">
+          <End Type="Model1.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="Model1.ProductList" Role="ProductList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductPK" />
+            </Principal>
+            <Dependent Role="ProductList">
+              <PropertyRef Name="ProductFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
+        <Alias Key="Model" Value="Model1" />
+        <Alias Key="Target" Value="Model1.Store" />
+        <EntityContainerMapping CdmEntityContainer="Model1Container" StorageEntityContainer="Model1StoreContainer">
+          <EntitySetMapping Name="GroupProduct">
+            <EntityTypeMapping TypeName="Model1.GroupProduct">
+              <MappingFragment StoreEntitySet="GroupProduct">
+                <ScalarProperty Name="GroupProductPK" ColumnName="GroupProductPK" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product">
+            <EntityTypeMapping TypeName="Model1.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="Measurement" ColumnName="Measurement" />
+                <ScalarProperty Name="ProductPK" ColumnName="ProductPK" />
+                <ScalarProperty Name="GroupProductFK" ColumnName="GroupProductFK" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GroupMeal">
+            <EntityTypeMapping TypeName="Model1.GroupMeal">
+              <MappingFragment StoreEntitySet="GroupMeal">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="GroupMealPK" ColumnName="GroupMealPK" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Meal">
+            <EntityTypeMapping TypeName="Model1.Meal">
+              <MappingFragment StoreEntitySet="Meal">
+                <ScalarProperty Name="Portions" ColumnName="Portions" />
+                <ScalarProperty Name="GroupMealFK" ColumnName="GroupMealFK" />
+                <ScalarProperty Name="ReadyTime" ColumnName="ReadyTime" />
+                <ScalarProperty Name="Recept" ColumnName="Recept" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="MealPK" ColumnName="MealPK" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MealProducts">
+            <EntityTypeMapping TypeName="Model1.MealProducts">
+              <MappingFragment StoreEntitySet="MealProducts">
+                <ScalarProperty Name="MealProducts1" ColumnName="MealProducts" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ProductFK" ColumnName="ProductFK" />
+                <ScalarProperty Name="MealFK" ColumnName="MealFK" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Menu">
+            <EntityTypeMapping TypeName="Model1.Menu">
+              <MappingFragment StoreEntitySet="Menu">
+                <ScalarProperty Name="DateFinish" ColumnName="DateFinish" />
+                <ScalarProperty Name="DateStart" ColumnName="DateStart" />
+                <ScalarProperty Name="MenuPK" ColumnName="MenuPK" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MenuDay">
+            <EntityTypeMapping TypeName="Model1.MenuDay">
+              <MappingFragment StoreEntitySet="MenuDay">
+                <ScalarProperty Name="QuantPortionsS" ColumnName="QuantPortionsS" />
+                <ScalarProperty Name="SupperFK" ColumnName="SupperFK" />
+                <ScalarProperty Name="QuantPortionsD" ColumnName="QuantPortionsD" />
+                <ScalarProperty Name="Dinner3FK" ColumnName="Dinner3FK" />
+                <ScalarProperty Name="Dinner2FK" ColumnName="Dinner2FK" />
+                <ScalarProperty Name="Dinner1FK" ColumnName="Dinner1FK" />
+                <ScalarProperty Name="QuantPortionsB" ColumnName="QuantPortionsB" />
+                <ScalarProperty Name="BreakfFK" ColumnName="BreakfFK" />
+                <ScalarProperty Name="MenuFK" ColumnName="MenuFK" />
+                <ScalarProperty Name="Day" ColumnName="Day" />
+                <ScalarProperty Name="Date_" ColumnName="Date_" />
+                <ScalarProperty Name="MenuDayPK" ColumnName="MenuDayPK" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductList">
+            <EntityTypeMapping TypeName="Model1.ProductList">
+              <MappingFragment StoreEntitySet="ProductList">
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ProductFK" ColumnName="ProductFK" />
+                <ScalarProperty Name="MenuFK" ColumnName="MenuFK" />
+                <ScalarProperty Name="ProductListPK" ColumnName="ProductListPK" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

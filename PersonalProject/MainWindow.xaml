@@ -1,0 +1,353 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Views="clr-namespace:PersonalProject.Views"
+        xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+        xmlns:local="clr-namespace:PersonalProject"
+        xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+        xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+        xmlns:dxn="http://schemas.devexpress.com/winfx/2008/xaml/navbar"
+        xmlns:ViewModels="clr-namespace:PersonalProject.ViewModels"
+        xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+        x:Class="PersonalProject.MainWindow"
+        Title="Поваренок" Height="618" Width="1195.5" WindowStartupLocation="CenterScreen" WindowState="Normal" Icon="Images/icon_povarenok.ico"
+        Loaded="Window_Loaded">
+    <Window.Resources>
+        <dx:EntitySimpleDataSource x:Key="EntitySimpleDataSource" ContextType="{x:Type local:Model1Container}" Path="GroupMeal">
+            <dx:DesignDataManager.DesignData>
+                <dx:DesignDataSettings RowCount="5"/>
+            </dx:DesignDataManager.DesignData>
+        </dx:EntitySimpleDataSource>
+        <dx:EntitySimpleDataSource x:Key="EntitySimpleDataSource1" ContextType="{x:Type local:Model1Container}" Path="GroupMeal">
+            <dx:DesignDataManager.DesignData>
+                <dx:DesignDataSettings RowCount="5"/>
+            </dx:DesignDataManager.DesignData>
+        </dx:EntitySimpleDataSource>
+        <Style x:Key="commonGroupStyle">
+            <Setter Property="Control.Foreground" Value="#FF3E3E3D" />
+            <Setter Property="Control.FontWeight" Value="Bold" />
+            <Setter Property="Control.Background" Value="#FFF9D28F"/>
+        </Style>
+        <Style x:Key="commonItemStyle">
+            <Setter Property="Control.Foreground" Value="DarkGray" />
+            <Setter Property="Control.Background" Value="Azure"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.Resources>
+            <ContextMenu x:Key="Add">
+                <MenuItem x:Name="miAdd" Header="Изменить блюдо" Click="mi_Click" Width="180" Height="20" Padding="3,2,0,2"/>
+            </ContextMenu>
+            <Style x:Key="individualItemStyle">
+                <Setter Property="Control.Foreground" Value="Black" />
+                <Setter Property="Control.FontWeight" Value="Bold" />
+                <!--<Setter Property="Control.TextWrapping" Value="Wrap" />-->
+            </Style>
+            <DataTemplate x:Key="itemTemplate">
+                <TextBlock Text="{Binding Content}" TextWrapping="Wrap" FontSize="14" FontFamily="Myriad Pro" LineHeight="14" TextOptions.TextFormattingMode="Ideal" LineStackingStrategy="MaxHeight" FontStyle="Italic"/>
+            </DataTemplate>
+            <Style x:Key="groupStyle">
+                <!--<Setter Property="dxn:NavBarViewBase.LayoutSettings" Value="{dxn:NavBarLayoutSettings TextHorizontalAlignment=Center}" />-->
+                <Setter Property="Control.Background" Value="#FFFD9E50"/>
+                <Setter Property="Control.Foreground" Value="#FF992411"/>
+                <Setter Property="Control.FontSize" Value="14pt"/>
+            </Style>
+            <Style x:Key="individualItemStyle1">
+                <!--<Setter Property="dxn:LayoutSettings" Value="{dxn:NavBarLayoutSettings TextHorizontalAlignment=Left}" />-->
+                <Setter Property="Control.Foreground" Value="Black" />
+                <Setter Property="Control.FontWeight" Value="Bold" />
+            </Style>
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="145*"/>
+            <ColumnDefinition Width="451*"/>
+        </Grid.ColumnDefinitions>
+        <TabControl HorizontalAlignment="Left" Height="588" VerticalAlignment="Top" Width="1188" Margin="0" Grid.ColumnSpan="2">
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Images/icon-2.png" Height="25" Width="25" VerticalAlignment="Center"/>
+                        <TextBlock Text="  Меню на сегодня" VerticalAlignment="Center" FontSize="14" TextAlignment="Right"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid Background="#FFC9E7F0" Margin="0,0,3,0">
+                    <dxn:NavBarControl x:Name="navbar" ItemsSource="{Binding Today}" Width="1165" AllowSelectItem="False">
+                        <dxn:NavBarControl.View>
+                            <dxn:SideBarView ActiveGroupMinHeight="70" GroupVisualStyle="{StaticResource groupStyle}" Height="530" ItemDisplayMode="ImageAndText"/>
+                        </dxn:NavBarControl.View>
+                        <dxn:NavBarGroup Header="Завтрак" DisplayMode="ImageAndText" LayoutSettings="{dxn:NavBarLayoutSettings TextHorizontalAlignment=Center}">
+                            <dxn:NavBarItem Content="{Binding Today.BreakfastName}"  VisualStyle="{StaticResource individualItemStyle1}"/>
+                            <dxn:NavBarItem Content="{Binding Today.BreakfastIngred}"/>
+                            <dxn:NavBarItem Content="{Binding Today.BreakfastRecept}"/>
+                        </dxn:NavBarGroup>
+                        <dxn:NavBarGroup Header="Обед" DisplayMode="ImageAndText" LayoutSettings="{dxn:NavBarLayoutSettings TextHorizontalAlignment=Center}">
+                            <!--<dxn:NavBarGroup Header="Первое">-->
+                            <dxn:NavBarItem Content="{Binding Today.DinnerFirst}" VisualStyle="{StaticResource individualItemStyle1}"/>
+                            <dxn:NavBarItem Content="{Binding Today.DinnerFirstIngred}"/>
+                            <dxn:NavBarItem Content="{Binding Today.DinnerFirstRecept}"/>
+                            <!--</dxn:NavBarGroup>
+                            <dxn:NavBarGroup Header="Гарнир">-->
+                            <dxn:NavBarItem Content="{Binding Today.DinnerGarnir}" VisualStyle="{StaticResource individualItemStyle1}"/>
+                            <dxn:NavBarItem Content="{Binding Today.DinnerGarnirIngred}"/>
+                            <dxn:NavBarItem Content="{Binding Today.DinnerGarnirRecept}"/>
+                            <!--</dxn:NavBarGroup>
+                            <dxn:NavBarGroup Header="Основное блюдо">-->
+                            <dxn:NavBarItem Content="{Binding Today.DinnerMain}" VisualStyle="{StaticResource individualItemStyle1}"/>
+                            <dxn:NavBarItem Content="{Binding Today.DinnerMainIngred}"/>
+                            <dxn:NavBarItem Content="{Binding Today.DinnerMainRecept}"/>
+                            <!--</dxn:NavBarGroup>-->
+                        </dxn:NavBarGroup>
+                        <dxn:NavBarGroup Header="Ужин" DisplayMode="ImageAndText" LayoutSettings="{dxn:NavBarLayoutSettings TextHorizontalAlignment=Center}">
+                            <dxn:NavBarItem Content="{Binding Today.SupperName}" VisualStyle="{StaticResource individualItemStyle1}"/>
+                            <dxn:NavBarItem Content="{Binding Today.SupperIngred}"/>
+                            <dxn:NavBarItem Content="{Binding Today.SupperRecept}"/>
+                        </dxn:NavBarGroup>
+                    </dxn:NavBarControl>
+                </Grid>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Images/icon-1.png" Height="25" Width="25" VerticalAlignment="Center"/>
+                        <TextBlock Text="  Меню на неделю" VerticalAlignment="Center" FontSize="14" TextAlignment="Right"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid Background="#FFC9E7F0">
+                    <TextBlock HorizontalAlignment="Left" Margin="10,64,0,0" TextWrapping="Wrap" Text="Порций" VerticalAlignment="Top" Height="22" Width="87">
+                        <TextBlock.Background>
+                            <SolidColorBrush Color="White" Opacity="0.3"/>
+                        </TextBlock.Background>
+                    </TextBlock>
+                    <TextBox x:Name="Portion" HorizontalAlignment="Left" Height="23" Margin="111,62,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="51" Text="3"/>
+                    <Grid HorizontalAlignment="Left" Height="87" Margin="10,96,0,0" VerticalAlignment="Top" Width="498">
+                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="89">
+                            <TextBlock.Background>
+                                <SolidColorBrush Color="#FFFBF8F8" Opacity="0.5"/>
+                            </TextBlock.Background>
+                        </TextBlock>
+                        <TextBlock HorizontalAlignment="Left" Margin="99,0,0,0" TextWrapping="Wrap" Text="Понедельник" VerticalAlignment="Top" FontSize="8" TextAlignment="Center" Height="16" Width="55">
+                            <TextBlock.Background>
+                                <SolidColorBrush Color="#FFFBF8F8" Opacity="0.5"/>
+                            </TextBlock.Background>
+                        </TextBlock>
+                        <TextBlock HorizontalAlignment="Left" Margin="156,0,0,0" TextWrapping="Wrap" Text="Вторник" VerticalAlignment="Top" Width="55" Height="16" TextAlignment="Center" FontSize="9">
+                            <TextBlock.Background>
+                                <SolidColorBrush Color="#FFFBF8F8" Opacity="0.5"/>
+                            </TextBlock.Background>
+                        </TextBlock>
+                        <TextBlock HorizontalAlignment="Left" Margin="213,0,0,0" TextWrapping="Wrap" Text="Среда" VerticalAlignment="Top" Width="55" Height="16" FontSize="9" TextAlignment="Center">
+                            <TextBlock.Background>
+                                <SolidColorBrush Color="#FFFBF8F8" Opacity="0.5"/>
+                            </TextBlock.Background>
+                        </TextBlock>
+                        <TextBlock HorizontalAlignment="Left" Margin="270,0,0,0" TextWrapping="Wrap" Text="Четверг" VerticalAlignment="Top" Width="55" Height="16" FontSize="9" TextAlignment="Center">
+                            <TextBlock.Background>
+                                <SolidColorBrush Color="#FFFBF8F8" Opacity="0.5"/>
+                            </TextBlock.Background>
+                        </TextBlock>
+                        <TextBlock HorizontalAlignment="Left" Margin="327,0,0,0" TextWrapping="Wrap" Text="Пятница" VerticalAlignment="Top" Width="55" Height="16" TextAlignment="Center" FontSize="9">
+                            <TextBlock.Background>
+                                <SolidColorBrush Color="#FFFBF8F8" Opacity="0.5"/>
+                            </TextBlock.Background>
+                        </TextBlock>
+                        <TextBlock HorizontalAlignment="Left" Margin="384,0,0,0" TextWrapping="Wrap" Text="Суббота" VerticalAlignment="Top" Width="55" Height="16" FontSize="9" TextAlignment="Center">
+                            <TextBlock.Background>
+                                <SolidColorBrush Color="#FFFBF8F8" Opacity="0.5"/>
+                            </TextBlock.Background>
+                        </TextBlock>
+                        <TextBlock HorizontalAlignment="Left" Margin="441,0,0,0" TextWrapping="Wrap" Text="Воскресенье" VerticalAlignment="Top" Width="55" Height="16" TextAlignment="Center" FontSize="9">
+                            <TextBlock.Background>
+                                <SolidColorBrush Color="#FFFBF8F8" Opacity="0.5"/>
+                            </TextBlock.Background>
+                        </TextBlock>
+                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Завтрак" VerticalAlignment="Top" Width="89" Margin="0,21,0,0">
+                            <TextBlock.Background>
+                                <SolidColorBrush Color="#FFFBF8F8" Opacity="0.5"/>
+                            </TextBlock.Background>
+                        </TextBlock>
+                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Обед" VerticalAlignment="Top" Width="89" Margin="0,42,0,0">
+                            <TextBlock.Background>
+                                <SolidColorBrush Color="#FFFBF8F8" Opacity="0.5"/>
+                            </TextBlock.Background>
+                        </TextBlock>
+                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Ужин" VerticalAlignment="Top" Width="89" Margin="0,63,0,0">
+                            <TextBlock.Background>
+                                <SolidColorBrush Color="#FFFBF8F8" Opacity="0.5"/>
+                            </TextBlock.Background>
+                        </TextBlock>
+                        <TextBox x:Name="tb11" Text ="{Binding Text, ElementName=Portion, Mode=OneWay}" HorizontalAlignment="Left" Height="18" Margin="99,20,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="55" FontSize="10"/>
+                        <TextBox x:Name="tb12" Text ="{Binding Text, ElementName=Portion, Mode=OneWay}" HorizontalAlignment="Left" Height="18" Margin="156,20,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="55" FontSize="10"/>
+                        <TextBox x:Name="tb13" Text ="{Binding Text, ElementName=Portion, Mode=OneWay}" HorizontalAlignment="Left" Height="18" Margin="213,20,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="55" FontSize="10"/>
+                        <TextBox x:Name="tb14" Text ="{Binding Text, ElementName=Portion, Mode=OneWay}" HorizontalAlignment="Left" Height="18" Margin="270,20,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="55" FontSize="10"/>
+                        <TextBox x:Name="tb15" Text ="{Binding Text, ElementName=Portion, Mode=OneWay}" HorizontalAlignment="Left" Height="18" Margin="327,20,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="55" FontSize="10"/>
+                        <TextBox x:Name="tb16" Text ="{Binding Text, ElementName=Portion, Mode=OneWay}" HorizontalAlignment="Left" Height="18" Margin="384,20,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="55" FontSize="10"/>
+                        <TextBox x:Name="tb17" Text ="{Binding Text, ElementName=Portion, Mode=OneWay}" HorizontalAlignment="Left" Height="18" Margin="441,20,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="55" FontSize="10"/>
+                        <TextBox x:Name="tb21" Text ="{Binding Text, ElementName=Portion, Mode=OneWay}" HorizontalAlignment="Left" Height="18" Margin="99,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="55" FontSize="10"/>
+                        <TextBox x:Name="tb22" Text ="{Binding Text, ElementName=Portion, Mode=OneWay}" HorizontalAlignment="Left" Height="18" Margin="156,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="55" FontSize="10"/>
+                        <TextBox x:Name="tb23" Text ="{Binding Text, ElementName=Portion, Mode=OneWay}" HorizontalAlignment="Left" Height="18" Margin="213,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="55" FontSize="10"/>
+                        <TextBox x:Name="tb24" Text ="{Binding Text, ElementName=Portion, Mode=OneWay}" HorizontalAlignment="Left" Height="18" Margin="270,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="55" FontSize="10"/>
+                        <TextBox x:Name="tb25" Text ="{Binding Text, ElementName=Portion, Mode=OneWay}" HorizontalAlignment="Left" Height="18" Margin="327,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="55" FontSize="10"/>
+                        <TextBox x:Name="tb26" Text ="{Binding Text, ElementName=Portion, Mode=OneWay}" HorizontalAlignment="Left" Height="18" Margin="384,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="55" FontSize="10"/>
+                        <TextBox x:Name="tb27" Text ="{Binding Text, ElementName=Portion, Mode=OneWay}" HorizontalAlignment="Left" Height="18" Margin="441,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="55" FontSize="10"/>
+                        <TextBox x:Name="tb31" Text ="{Binding Text, ElementName=Portion, Mode=OneWay}" HorizontalAlignment="Left" Height="18" Margin="99,63,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="55" FontSize="10"/>
+                        <TextBox x:Name="tb32" Text ="{Binding Text, ElementName=Portion, Mode=OneWay}" HorizontalAlignment="Left" Height="18" Margin="156,63,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="55" FontSize="10"/>
+                        <TextBox x:Name="tb33" Text ="{Binding Text, ElementName=Portion, Mode=OneWay}" HorizontalAlignment="Left" Height="18" Margin="213,63,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="55" FontSize="10"/>
+                        <TextBox x:Name="tb34" Text ="{Binding Text, ElementName=Portion, Mode=OneWay}" HorizontalAlignment="Left" Height="18" Margin="270,63,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="55" FontSize="10"/>
+                        <TextBox x:Name="tb35" Text ="{Binding Text, ElementName=Portion, Mode=OneWay}" HorizontalAlignment="Left" Height="18" Margin="327,63,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="55" FontSize="10"/>
+                        <TextBox x:Name="tb36" Text ="{Binding Text, ElementName=Portion, Mode=OneWay}" HorizontalAlignment="Left" Height="18" Margin="384,63,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="55" FontSize="10"/>
+                        <TextBox x:Name="tb37" Text ="{Binding Text, ElementName=Portion, Mode=OneWay}" HorizontalAlignment="Left" Height="18" Margin="441,63,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="55" FontSize="10"/>
+                    </Grid>
+                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Завтрак" VerticalAlignment="Top" Width="122" Margin="534,9,0,0" TextAlignment="Center">
+                        <TextBlock.Background>
+                            <SolidColorBrush Color="#FFFBF8F8" Opacity="0.5"/>
+                        </TextBlock.Background>
+                    </TextBlock>
+                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Обед" VerticalAlignment="Top" Width="352" Margin="661,9,0,0" Height="16" TextAlignment="Center">
+                        <TextBlock.Background>
+                            <SolidColorBrush Color="#FFFBF8F8" Opacity="0.5"/>
+                        </TextBlock.Background>
+                    </TextBlock>
+                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Ужин" VerticalAlignment="Top" Width="132" Margin="1018,9,0,0" Height="16" TextAlignment="Center">
+                        <TextBlock.Background>
+                            <SolidColorBrush Color="#FFFBF8F8" Opacity="0.5"/>
+                        </TextBlock.Background>
+                    </TextBlock>
+                    <Button Content="Сгенерировать меню" HorizontalAlignment="Left" Margin="534,247,0,0" VerticalAlignment="Top" Width="616" Height="24" Click="Generate"/>
+                    <dxe:ListBoxEdit x:Name="ListBr" HorizontalAlignment="Left" Height="185" Margin="534,57,0,0" VerticalAlignment="Top" Width="122" DisplayMember="Name" ItemsSource="{Binding Data, Source={StaticResource EntitySimpleDataSource1}}" ValueMember="GroupMealPK" SelectionMode="Multiple"/>
+                    <dxe:ListBoxEdit x:Name="ListDn1" HorizontalAlignment="Left" Height="185" Margin="661,57,0,0" VerticalAlignment="Top" Width="115" DisplayMember="Name" ItemsSource="{Binding Data, Source={StaticResource EntitySimpleDataSource1}}" ValueMember="GroupMealPK" SelectionMode="Multiple"/>
+                    <dxe:ListBoxEdit x:Name="ListDn2" HorizontalAlignment="Left" Height="185" Margin="781,57,0,0" VerticalAlignment="Top" Width="120" DisplayMember="Name" ItemsSource="{Binding Data, Source={StaticResource EntitySimpleDataSource1}}" ValueMember="GroupMealPK" SelectionMode="Multiple"/>
+                    <dxe:ListBoxEdit x:Name="ListDn3" HorizontalAlignment="Left" Height="185" Margin="906,57,0,0" VerticalAlignment="Top" Width="107" DisplayMember="Name" ItemsSource="{Binding Data, Source={StaticResource EntitySimpleDataSource1}}" ValueMember="GroupMealPK" SelectionMode="Multiple"/>
+                    <dxe:ListBoxEdit x:Name="ListSp" HorizontalAlignment="Left" Height="185" Margin="1018,57,0,0" VerticalAlignment="Top" Width="132" DisplayMember="Name" ItemsSource="{Binding Data, Source={StaticResource EntitySimpleDataSource1}}" ValueMember="GroupMealPK" SelectionMode="Multiple"/>
+                    <TextBlock x:Name="DS" HorizontalAlignment="Left" Margin="167,26,0,0" TextWrapping="Wrap" Text="{Binding DateStart, Mode=TwoWay}" VerticalAlignment="Top" Height="22" Width="109" Foreground="Black" FontFamily="Myriad Pro" FontWeight="Bold" TextAlignment="Center"/>
+                    <TextBlock x:Name="DS_Copy" HorizontalAlignment="Left" Margin="281,26,0,0" TextWrapping="Wrap" Text="{Binding DateEnd, Mode=TwoWay}" VerticalAlignment="Top" Height="22" Width="109" Foreground="Black" TextAlignment="Center" FontFamily="Myriad Pro" FontWeight="Bold"/>
+
+                    <DataGrid x:Name="DataMenu" MouseDoubleClick="do_Click" ItemsSource="{Binding Menus}" HorizontalAlignment="Left" Margin="10,288,0,0" VerticalAlignment="Top" Height="222" Width="1140" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" Background="{x:Null}" BorderBrush="{x:Null}" CanUserReorderColumns="False" CanUserSortColumns="False" Foreground="Black" HorizontalGridLinesBrush="#FFFBF7F7" GridLinesVisibility="Horizontal" SelectionUnit="CellOrRowHeader" HeadersVisibility="Column">
+                        <DataGrid.RowBackground>
+                            <SolidColorBrush Color="White" Opacity="0.6"/>
+                        </DataGrid.RowBackground>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Day}" ClipboardContentBinding="{x:Null}" Header="День" Width="150" IsReadOnly="True">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style TargetType="{x:Type DataGridCell}" >
+                                        <Setter Property="FontWeight" Value="Bold"/>
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding Breakfast}" ClipboardContentBinding="{x:Null}" Header="Завтрак" Width="200" IsReadOnly="True">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style TargetType="{x:Type DataGridCell}" >
+                                        <Style.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="ContextMenu" Value="{StaticResource Add}"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding DinnerFirst}" ClipboardContentBinding="{x:Null}" Header="Обед Первое" Width="200" IsReadOnly="True">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style TargetType="{x:Type DataGridCell}" >
+                                        <Style.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="ContextMenu" Value="{StaticResource Add}"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding DinnerGarn}" ClipboardContentBinding="{x:Null}" Header="Обед Гарнир" Width="200" IsReadOnly="True">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style TargetType="{x:Type DataGridCell}" >
+                                        <Style.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="ContextMenu" Value="{StaticResource Add}"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding DinnerMain}" ClipboardContentBinding="{x:Null}" Header="Обед Основное" Width="200" IsReadOnly="True">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style TargetType="{x:Type DataGridCell}" >
+                                        <Style.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="ContextMenu" Value="{StaticResource Add}"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding Supper}" ClipboardContentBinding="{x:Null}" Header="Ужин" Width="185" IsReadOnly="True">
+                                <DataGridTextColumn.CellStyle>
+                                    <Style TargetType="{x:Type DataGridCell}" >
+                                        <Style.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="ContextMenu" Value="{StaticResource Add}"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGridTextColumn.CellStyle>
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+
+                    </DataGrid>
+                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Первое" VerticalAlignment="Top" Width="115" Margin="661,32,0,0" Height="16" TextAlignment="Center">
+                        <TextBlock.Background>
+                            <SolidColorBrush Color="#FFFBF8F8" Opacity="0.5"/>
+                        </TextBlock.Background>
+                    </TextBlock>
+                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Гарнир" VerticalAlignment="Top" Width="120" Margin="781,32,0,0" Height="16" TextAlignment="Center">
+                        <TextBlock.Background>
+                            <SolidColorBrush Color="#FFFBF8F8" Opacity="0.5"/>
+                        </TextBlock.Background>
+                    </TextBlock>
+                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Основное" VerticalAlignment="Top" Width="107" Margin="906,32,0,0" Height="16" TextAlignment="Center">
+                        <TextBlock.Background>
+                            <SolidColorBrush Color="#FFFBF8F8" Opacity="0.5"/>
+                        </TextBlock.Background>
+                    </TextBlock>
+                    <dxe:ComboBoxEdit x:Name="CB1" ItemsSource="{Binding CurWeek}" SelectedIndexChanged="ComboBoxEdit_SelectedIndexChanged" HorizontalAlignment="Left" Margin="10,26,0,0" VerticalAlignment="Top" Width="152" SelectedIndex="0">
+                    </dxe:ComboBoxEdit>
+                </Grid>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Images/icon-3.png" Height="25" Width="25" VerticalAlignment="Center"/>
+                        <TextBlock Text="  Поваренная книга" VerticalAlignment="Center" FontSize="14" TextAlignment="Right"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid Background="#FFC9E7F0">
+                    <Views:MenuBookView x:Name="MBV1" HorizontalAlignment="Left"  VerticalAlignment="Top" Margin="10,10,0,0"/>
+                    <Views:ViewMeal x:Name="VM1" HorizontalAlignment="Left" Margin="400,30,0,0" VerticalAlignment="Top" IsEnabled="True"/>
+                    <Button Content="Добавить блюдо" HorizontalAlignment="Left" Height="21" Margin="20,414,0,0" VerticalAlignment="Top" Width="280" Click="add_Click"/>
+                </Grid>
+            </TabItem>
+
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Images/icon-4.png" Height="25" Width="25" VerticalAlignment="Center"/>
+                        <TextBlock Text="  Список покупок" VerticalAlignment="Center" FontSize="14" TextAlignment="Right"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid Background="#FFC9E7F0">
+                    <dxg:GridControl AutoExpandAllGroups="True" ItemsSource="{Binding Products}" EnableSmartColumnsGeneration="True" HorizontalAlignment="Left" VerticalAlignment="Top" Height="537" Width="876">
+                        <dxg:GridControl.Columns>
+                            <dxg:GridColumn x:Name="col1" GroupIndex="0" Binding="{Binding ProductGroup}" VisibleIndex="0" Header="Группа" Width="300" AllowEditing="False"/>
+                            <dxg:GridColumn Binding="{Binding ProductName}" Header="Наименование" VisibleIndex="1" Width="300" AllowEditing="False"/>
+                            <dxg:GridColumn Binding="{Binding Quantity}" Header="Количество" VisibleIndex="2" Width="120" AllowEditing="False"/>
+                            <dxg:GridColumn Binding="{Binding Measur}" Header="Ед. изм." VisibleIndex="3" Width="100" AllowEditing="False"/>
+                        </dxg:GridControl.Columns>
+                        <dxg:GridControl.View>
+                            <dxg:TableView x:Name="list" ShowTotalSummary="True"/>
+                        </dxg:GridControl.View>
+                    </dxg:GridControl>
+                    <Button Content="Просмотр/Печать" Click="PreviewGrid" HorizontalAlignment="Left" Margin="902,73,0,0" VerticalAlignment="Top" Width="148" Height="33"/>
+                    <Button Content="Сохранить в xls" Click="ExportGrid" HorizontalAlignment="Left" Margin="902,124,0,0" VerticalAlignment="Top" Width="148" Height="33"/>
+                    <dxe:ComboBoxEdit x:Name="CB2" ItemsSource="{Binding CurList}" SelectedIndexChanged="ListProdCB_SelectedIndexChanged" HorizontalAlignment="Left" Margin="902,10,0,0" VerticalAlignment="Top" Width="152" SelectedIndex="0"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

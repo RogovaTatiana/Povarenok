@@ -1,0 +1,12 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Views="clr-namespace:PersonalProject.Views" x:Class="PersonalProject.Views.ChoseMealView"
+        Title="MealsBookView" Height="432.836" Width="422.388">
+    <Grid Background="#FFC9E7F0">
+
+        <Views:MenuBookView x:Name="MBV1" Margin="5,5,5,60"/>
+        <Button Content="Ok" Command="{Binding ChangeMeal}" HorizontalAlignment="Left" Height="29" Margin="10,364,0,0" VerticalAlignment="Top" Width="394" Click="Button_Click"/>
+
+    </Grid>
+</Window>
